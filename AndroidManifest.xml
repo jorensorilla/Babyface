@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.babyface"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+	 <!-- REQUIRED PERMISSIONS -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- OPTIONAL PERMISSION, used to enhance the wheel experience -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <application
+        android:allowBackup="true"
+        android:debuggable="true"
+        android:icon="@drawable/babyface_logo"
+        android:logo="@drawable/applogo"
+        android:theme="@style/CustomTheme" 
+        	>
+        <meta-data
+       	 	android:name="com.aviary.android.feather.v1.API_KEY"
+        	android:value="iba3x4lgwg3diuqq" />
+        <activity
+            android:name="com.babyface.Splash"
+            android:label="BabyFace"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- filters to allow this app to receive image intents from the system -->
+            <intent-filter>
+                <action android:name="android.intent.action.CHOOSER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.babyface.MainActivity"
+            android:label=" "
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.example.babyface.MAINACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.babyface.EntryView"
+            android:screenOrientation="portrait" 
+            android:label=" "  
+             >
+        </activity>
+        <activity
+            android:name="com.babyface.AddDiaryActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_add_diary" >
+        </activity>
+        <activity
+            android:name="com.babyface.FrameSelection"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_frame_selection" >
+        </activity>
+        <activity
+            android:name="com.babyface.SelectImage"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_select_image" >
+        </activity>
+        <activity
+            android:name="com.babyface.FrameActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_frame" >
+        </activity>
+        <activity
+            android:name="com.babyface.ViewEntry"
+            android:screenOrientation="portrait"
+            android:label=" "> 
+        </activity>
+        <activity
+            android:name="com.babyface.AddEntry"
+            android:screenOrientation="portrait"
+            android:label="" >
+        </activity>
+        <activity
+            android:name="com.babyface.AndroidCustomGalleryActivity"
+            android:screenOrientation="portrait"
+            android:label=" " >
+        </activity>
+        
+       <!-- CUSTOM IMAGE PICKER  -->
+       
+        <activity
+            android:name="com.luminous.pick.MultipleImageLoader"
+            android:label="" 
+            android:screenOrientation="portrait">        
+        </activity>
+        
+         <activity android:name="com.babyface.CustomGalleryActivity" 
+            android:screenOrientation="portrait">
+           <intent-filter>                
+                <action android:name="luminous.ACTION_MULTIPLE_PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--AVIARY FEATHER ENTRIES  -->
+       
+        
+        <!-- feather activity must be defined here -->
+        <activity
+            android:name="com.aviary.android.feather.FeatherActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:largeHeap="true"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AviaryTheme.Custom"
+            android:process=":standalone" />
+        
+        <!-- image info activity -->
+        <activity 
+            android:name="com.babyface.ImageInfoActivity"
+            android:label="@string/image_details"
+            android:noHistory="true"
+            android:launchMode="singleTop"
+            android:theme="@style/AviaryTheme.Custom.Dialog" />        
+
+        <!-- Aviary Receiver must be defined here. gets the newly installed plugins -->
+        <receiver
+            android:name="com.aviary.android.feather.library.receivers.AviarySystemReceiver"
+            android:exported="true"
+            android:process=":aviary_sample_system_receiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>            
+        </receiver>
+        
+        <!-- Required for the hi-res image processing -->
+        <!-- The "android:authorities" attribute must be unique, so please use your app's package path in this way: -->
+        <!-- 	android:authorities="{your.package.name}.HiResProvider" -->
+        <provider 
+            android:name="com.aviary.android.feather.library.providers.FeatherContentProvider"
+            android:exported="false"
+            android:authorities="com.example.babyface.HiResProvider"
+            android:process=":standalone">
+        </provider>
+    </application>
+
+</manifest>

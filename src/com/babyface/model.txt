@@ -1,0 +1,132 @@
+diaryModel
+
+public Diary getDiary(int diaryID){
+		Diary diary = new Diary();
+		
+		   
+		   String [] columns=new String[]{ BabyFaceDAO.COLUMN_DIARY_ID, BabyFaceDAO.COLUMN_BABY_NAME, 
+				   BabyFaceDAO.COLUMN_BABY_DOB, BabyFaceDAO.COLUMN_BABY_POB, BabyFaceDAO.COLUMN_GENDER};
+		Cursor c;	   
+		sqldb = db.getReadableDatabase();
+	
+          c = sqldb.query(BabyFaceDAO.DIARY_TABLE, columns, BabyFaceDAO.COLUMN_DIARY_ID +"=?", new String[]{String.valueOf(diaryID)}, null, null, null);
+          
+          c.moveToFirst();
+          diary.setDiaryID(c.getInt(c.getColumnIndex(BabyFaceDAO.COLUMN_DIARY_ID)));
+          diary.setBabyName(c.getString(c.getColumnIndex(BabyFaceDAO.COLUMN_BABY_NAME)));
+          diary.setBabyDOB(c.getInt(c.getColumnIndex(BabyFaceDAO.COLUMN_BABY_DOB)));
+          diary.setBabyPOB(c.getString(c.getColumnIndex(BabyFaceDAO.COLUMN_BABY_POB)));
+          diary.setGender(c.getInt(c.getColumnIndex(BabyFaceDAO.COLUMN_GENDER)));
+          c.close();
+		return diary;
+	}
+	public void  addDiary(){
+		
+		Diary event;
+		ArrayList<Diary> diaryList = new ArrayList<Diary>();
+		
+		 sqldb = db.getWritableDatabase();
+		 sqldb.execSQL("PRAGMA foreign_keys=ON;"); 
+	
+			contentVal.put(BabyFaceDAO.COLUMN_BABY_NAME,"Hi There!");
+			contentVal.put(BabyFaceDAO.COLUMN_BABY_DOB,20110202);
+			contentVal.put(BabyFaceDAO.COLUMN_BABY_POB, "Manila");
+			contentVal.put(BabyFaceDAO.COLUMN_GENDER, 0);
+			
+			
+			sqldb.insert(BabyFaceDAO.DIARY_TABLE, null, contentVal);
+			
+		
+			sqldb.close();
+	}
+	
+
+EventModel
+
+
+	public void addEvent(Event event, ArrayList<String> imagePath){
+		Cursor c;
+		ArrayList<Diary> diaryList = new ArrayList<Diary>();
+		
+		 sqldb = db.getWritableDatabase();
+		 sqldb.execSQL("PRAGMA foreign_keys=ON;"); 
+		 
+		
+			
+			
+			contentVal.put(BabyFaceDAO.COLUMN_DIARY_ID, event.getDiaryID());
+			contentVal.put(BabyFaceDAO.COLUMN_EVENT_NAME,event.getEventName());
+			contentVal.put(BabyFaceDAO.COLUMN_EVENT_DESC, event.getEventDesc());
+			sqldb.insert(BabyFaceDAO.EVENT_TABLE, null, contentVal);
+			
+			int eventID = getMaxEventID();
+			
+			for(String s : imagePath){
+				contentVal.clear();
+				contentVal.put(BabyFaceDAO.COLUMN_EVENT_ID, eventID);
+				contentVal.put(BabyFaceDAO.COLUMN_IMAGE_PATH,s);
+				sqldb.insert(BabyFaceDAO.IMAGE_TABLE, null, contentVal);
+				
+			}
+			
+		
+			sqldb.close();
+		
+	}
+	
+	public int getMaxEventID(){
+		   
+		 sqldb = db.getReadableDatabase();
+		   SQLiteStatement stmt =  sqldb.compileStatement("SELECT MAX(eventID) FROM Event");
+
+		    return (int) stmt.simpleQueryForLong();
+		
+       
+	}
+	
+	public ArrayList<Event> getAllEvents(int diaryID){
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		
+		
+		
+		
+		 String [] columns=new String[]{ BabyFaceDAO.COLUMN_EVENT_ID, BabyFaceDAO.COLUMN_EVENT_NAME, 
+				  BabyFaceDAO.COLUMN_EVENT_DESC};
+		Cursor c;	   
+		sqldb = db.getReadableDatabase();
+	
+        c = sqldb.query(BabyFaceDAO.EVENT_TABLE, columns, BabyFaceDAO.COLUMN_DIARY_ID +"=?", new String[]{String.valueOf(diaryID)}, null, null, BabyFaceDAO.COLUMN_EVENT_ID + " DESC");
+        
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+        Event event = new Event();
+        event.setEventID(c.getInt(c.getColumnIndex(BabyFaceDAO.COLUMN_EVENT_ID)));
+        event.setEventName(c.getString(c.getColumnIndex(BabyFaceDAO.COLUMN_EVENT_NAME)));
+        event.setEventDesc(c.getString(c.getColumnIndex(BabyFaceDAO.COLUMN_EVENT_DESC)));
+        eventList.add(event);
+        c.moveToNext();
+        }
+        c.close();
+		return eventList;
+		
+	}
+
+
+Imagemodel 
+
+		
+		public String getFirstImagePath(int eventID){
+		String path=null;
+			Cursor c;	   
+			sqldb = db.getReadableDatabase();
+		
+	          c = sqldb.query(BabyFaceDAO.IMAGE_TABLE,new String[]{ BabyFaceDAO.COLUMN_IMAGE_PATH}, BabyFaceDAO.COLUMN_EVENT_ID +"=?", new String[]{String.valueOf(eventID)}, null, null, null);
+	          
+	         
+	          if(c.moveToFirst())
+	         path = c.getString(c.getColumnIndex(BabyFaceDAO.COLUMN_IMAGE_PATH));
+
+	          c.close();
+	          return path;
+		}
+		

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/profile_layout" >
+
+        <TextView
+            android:id="@+id/birthPlaceText"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignBaseline="@+id/textView3"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/textView3"
+            android:text="TextViey" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:text="Birthplace: " />
+
+        <TextView
+            android:id="@+id/birthDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_alignBaseline="@+id/textView2"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/genderImage"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/genderTextView"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/genderTextView"
+            android:scaleType="fitXY"
+            android:src="@drawable/femalesign" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignLeft="@+id/textView1"
+            android:layout_below="@+id/textView1"
+            android:text="Birthdate: " />
+
+        <TextView
+            android:id="@+id/genderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignLeft="@+id/textView3"
+            android:layout_below="@+id/textView3"
+            android:text="Gender: " />
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_toRightOf="@+id/textView1"
+            android:layout_marginLeft="3dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="86dp"
+            android:text="Name: " />
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignBottom="@+id/genderImage"
+            android:layout_toLeftOf="@+id/textView3"
+            android:padding="7dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/baby_info_design" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
